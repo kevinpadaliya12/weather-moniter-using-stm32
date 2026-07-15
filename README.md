@@ -18,7 +18,8 @@ steps blocks longer than expected and everything else stalls with it.
 This project separates concerns into FreeRTOS tasks so a slow I2C
 transaction or a busy display refresh can't stall sensor sampling, and
 vice versa.
-┌──────────────────┐
+
+                     ┌──────────────────┐
                     │  FreeRTOS         │
                     │  Scheduler         │
                     └────────┬───────────┘
@@ -34,6 +35,7 @@ vice versa.
              (latest SensorData_t)
 
    BME280 + SSD1306 share I2C1 → serialized by a mutex
+   
 
 - **SensorTask** owns all sampling — BME280 over I2C, MQ-135 over ADC —
   and pushes the latest reading onto a length-1 queue every 2 seconds.
